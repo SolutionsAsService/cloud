@@ -14,7 +14,7 @@ function withMarks(text, index) {
   for (const { r, at } of hits) {
     if (at < i) continue;
     out.push(text.slice(i, at));
-    out.push(<mark key={r.id} className="r" style={{ '--hl': COLORS[r.marker] }} title={`Answer ${r.n}: ${r.short}`}>{r.quote}</mark>);
+    out.push(<mark key={r.id} id={`q-${r.id}`} className="r" style={{ '--hl': COLORS[r.marker] }} title={`Answer ${r.n}: ${r.short}`}>{r.quote}</mark>);
     i = at + r.quote.length;
   }
   out.push(text.slice(i));

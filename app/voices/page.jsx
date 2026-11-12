@@ -20,7 +20,7 @@ export default function Voices() {
                 <blockquote>“{r.quote}”</blockquote>
                 <p className="name" id={`v-${n}`}>{v.name}</p>
                 <p className="role">{v.role} · answer {n}: {r.short}</p>
-                <Link href={`/article#p${r.p + 1}`}>Read it in context (paragraph {r.p + 1}) →</Link>
+                <Link href={`/article#q-${r.id}`}>Read it in context (paragraph {r.p + 1}) →</Link>
               </section>
             );
           })}

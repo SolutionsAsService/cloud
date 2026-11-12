@@ -17,7 +17,7 @@ function geometry(size) {
   const wide = size === 'wide';
   const g = wide
     ? { w: 1160, h: 500, cx: 580, cy: 196, rx: 214, ry: 112, r: 70, fr: 64, step: 64 }
-    : { w: 343, h: 232, cx: 171, cy: 112, rx: 98, ry: 56, r: 40, fr: 36, step: 0 };
+    : { w: 343, h: 236, cx: 171, cy: 116, rx: 104, ry: 60, r: 50, fr: 46, step: 0 };
   const at = (deg, rr) => {
     const a = (deg * Math.PI) / 180;
     return { x: g.cx + Math.cos(a) * g.rx, y: g.cy + Math.sin(a) * g.ry, r: rr, deg };
@@ -30,9 +30,48 @@ function geometry(size) {
 
 const round = v => Math.round(v * 10) / 10;
 
+// The mesh the cloud hides: routers scattered inside the cloud and the links between
+// them (deterministic). One route, entry to exit, is the path a packet happens to take.
+function mesh(g) {
+  let seed = 7;
+  const rand = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  const pts = [];
+  while (pts.length < (g.w > 600 ? 46 : 26)) {
+    const x = g.cx + (rand() * 2 - 1) * (g.rx + g.r * 0.55), y = g.cy + (rand() * 2 - 1) * (g.ry + g.r * 0.5);
+    if (((x - g.cx) / (g.rx + g.r * 0.6)) ** 2 + ((y - g.cy) / (g.ry + g.r * 0.55)) ** 2 < 1) pts.push({ x, y });
+  }
+  // Links: a minimum spanning tree (so the mesh is one piece) plus each node's nearest
+  // neighbour, for loops.
+  const d2 = (a, b) => (pts[a].x - pts[b].x) ** 2 + (pts[a].y - pts[b].y) ** 2;
+  const key = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
+  const seen = new Set();
+  const links = [];
+  const add = (a, b) => { const k = key(a, b); if (a !== b && !seen.has(k)) { seen.add(k); links.push([a, b]); } };
+  const inTree = new Set([0]);
+  while (inTree.size < pts.length) {
+    let best = null;
+    for (const a of inTree) for (let b = 0; b < pts.length; b++) if (!inTree.has(b) && (!best || d2(a, b) < best[2])) best = [a, b, d2(a, b)];
+    add(best[0], best[1]); inTree.add(best[1]);
+  }
+  pts.forEach((_, a) => { const n = pts.map((_, b) => b).filter(b => b !== a).sort((x, y) => d2(a, x) - d2(a, y)); add(a, n[1]); });
+  // Route: shortest hop path from the node nearest the lower left to the one nearest the
+  // lower right, the sides where "your computer" and "the server" plug in.
+  const adj = pts.map(() => []);
+  for (const [a, b] of links) { adj[a].push(b); adj[b].push(a); }
+  const corner = sx => pts.reduce((b, p, i) => ((sx * p.x + p.y * 0.8) > (sx * pts[b].x + pts[b].y * 0.8) ? i : b), 0);
+  const start = corner(-1), end = corner(1);
+  const prev = new Map([[start, -1]]);
+  const queue = [start];
+  while (queue.length) { const n = queue.shift(); if (n === end) break; for (const m of adj[n]) if (!prev.has(m)) { prev.set(m, n); queue.push(m); } }
+  const route = [];
+  for (let n = end; n !== -1 && n !== undefined; n = prev.get(n)) route.unshift(n);
+  return { pts, links, route };
+}
+
 export default function WhiteboardCloud({ size, id }) {
   const { g, lobes, fillers, wide } = geometry(size);
   const all = [...lobes, ...fillers];
+  const m = mesh(g);
   return (
     <svg className={`board board--${size}`} viewBox={`0 0 ${g.w} ${g.h}`} width={g.w} height={g.h} role="group" aria-labelledby={`${id}-t ${id}-d`}>
       <title id={`${id}-t`}>The Internet cloud, drawn from the article’s ten reasons</title>
@@ -50,7 +89,7 @@ export default function WhiteboardCloud({ size, id }) {
           <text className="hand hand--box" x={g.cx - 250} y={g.h - 32} textAnchor="middle">your computer</text>
           <rect className="ink ink--black box" x={g.cx + 180} y={g.h - 64} width="140" height="50" rx="6" />
           <text className="hand hand--box" x={g.cx + 250} y={g.h - 32} textAnchor="middle">the server</text>
-          <text className="hand hand--note" x={g.cx} y={g.cy + g.ry + g.r + 40} textAnchor="middle">“…as long as it comes out of the cloud at the correct address.”</text>
+          <text className="hand hand--note" x={g.cx} y={g.cy + g.ry + g.r + 40} textAnchor="middle">“…as long as it comes out of the cloud at the correct address.” (the authors)</text>
         </g>
       )}
 
@@ -59,6 +98,17 @@ export default function WhiteboardCloud({ size, id }) {
         {all.map((l, i) => <circle key={`s${i}`} className="lobe-stroke" cx={round(l.x)} cy={round(l.y)} r={l.r} />)}
         {all.map((l, i) => <circle key={`f${i}`} className="lobe-fill" cx={round(l.x)} cy={round(l.y)} r={l.r - 2.6} />)}
         <ellipse className="lobe-fill" cx={g.cx} cy={g.cy} rx={g.rx + 4} ry={g.ry + 4} />
+        <g className="hidden-net" aria-hidden="true">
+          {m.links.map(([a, b], i) => <line key={i} className="net-link" x1={round(m.pts[a].x)} y1={round(m.pts[a].y)} x2={round(m.pts[b].x)} y2={round(m.pts[b].y)} />)}
+          <polyline className="net-route" points={[
+            ...(wide ? [`${g.cx - 120},${g.cy + 120}`] : []),
+            ...m.route.map(i => `${round(m.pts[i].x)},${round(m.pts[i].y)}`),
+            ...(wide ? [`${g.cx + 120},${g.cy + 120}`] : []),
+          ].join(' ')} />
+          {m.pts.map((p, i) => <rect key={i} className="net-node" x={round(p.x - 3.5)} y={round(p.y - 3.5)} width="7" height="7" rx="1.5" />)}
+        </g>
+        {all.map((l, i) => <circle key={`g${i}`} className="fog" cx={round(l.x)} cy={round(l.y)} r={l.r - 2.6} />)}
+        <ellipse className="fog" cx={g.cx} cy={g.cy} rx={g.rx + 4} ry={g.ry + 4} />
         <text className="cloud-word" x={g.cx} y={g.cy + (wide ? 22 : 12)} textAnchor="middle">the Internet</text>
       </g>
 
@@ -70,7 +120,7 @@ export default function WhiteboardCloud({ size, id }) {
         const color = MARKER[l.reason.marker];
         const tx = left ? g.cx - g.rx - g.r - 34 : g.cx + g.rx + g.r + 34;
         return (
-          <Link key={l.reason.id} href={`/article#p${l.reason.p + 1}`} className="lobe" aria-label={`${l.n}. ${l.reason.short}, ${l.reason.who}: read the passage`} style={{ '--ink': color }}>
+          <Link key={l.reason.id} href={`/article#q-${l.reason.id}`} className="lobe" aria-label={`${l.n}. ${l.reason.short}, ${l.reason.who}: read the passage`} style={{ '--ink': color }}>
             <circle className="lobe-hit" cx={round(l.x)} cy={round(l.y)} r={l.r} />
             <text className="lobe-n" x={round(nx)} y={round(ny) + (wide ? 10 : 7)} textAnchor="middle">{l.n}</text>
             {wide && (
