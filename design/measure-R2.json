@@ -1,0 +1,226 @@
+{
+ "measuredAt": "2026-11-12T03:34:16.377Z",
+ "base": "http://localhost:3300",
+ "pages": {
+  "/ @1280": {
+   "loadMs": 122,
+   "bytes": {
+    "html": 88506,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": {
+    "top": 68,
+    "bottom": 752.609375,
+    "right": 1221.609375,
+    "figScroll": [
+     0
+    ]
+   },
+   "viewport": [
+    1280,
+    800
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": 20.99993896484375,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/ @375": {
+   "loadMs": 90,
+   "bytes": {
+    "html": 88506,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": {
+    "top": 90,
+    "bottom": 797.296875,
+    "right": 359,
+    "figScroll": [
+     0
+    ]
+   },
+   "viewport": [
+    375,
+    812
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": 26,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/article @1280": {
+   "loadMs": 83,
+   "bytes": {
+    "html": 25405,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    1280,
+    800
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/article @375": {
+   "loadMs": 80,
+   "bytes": {
+    "html": 25405,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    375,
+    812
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/voices @1280": {
+   "loadMs": 85,
+   "bytes": {
+    "html": 15759,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    1280,
+    800
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/voices @375": {
+   "loadMs": 75,
+   "bytes": {
+    "html": 15759,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    375,
+    812
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/about @1280": {
+   "loadMs": 76,
+   "bytes": {
+    "html": 11696,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    1280,
+    800
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  },
+  "/about @375": {
+   "loadMs": 87,
+   "bytes": {
+    "html": 11696,
+    "js": 462258,
+    "css": 8632,
+    "font": 75020
+   },
+   "overflowX": 0,
+   "heroBox": null,
+   "viewport": [
+    375,
+    812
+   ],
+   "lowContrast": [],
+   "svgLowContrast": [],
+   "smallestSvgTextPx": null,
+   "smallTargets": [],
+   "hiddenLeak": 0,
+   "focus": {
+    "el": "A Why a cloud?",
+    "outline": "solid 3px rgb(29, 78, 216)"
+   }
+  }
+ },
+ "noJsLanding": {
+  "dots": 10,
+  "h1": "Why a cloud?"
+ },
+ "noJsAtlas": {
+  "paras": 12
+ },
+ "linksChecked": 4,
+ "brokenLinks": [],
+ "fixtures": {
+  "overflowFires": true,
+  "contrastFires": true,
+  "smallTargetFires": true
+ }
+}
