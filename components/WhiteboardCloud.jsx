@@ -38,7 +38,8 @@ function mesh(g) {
   const pts = [];
   while (pts.length < (g.w > 600 ? 46 : 26)) {
     const x = g.cx + (rand() * 2 - 1) * (g.rx + g.r * 0.55), y = g.cy + (rand() * 2 - 1) * (g.ry + g.r * 0.5);
-    if (((x - g.cx) / (g.rx + g.r * 0.6)) ** 2 + ((y - g.cy) / (g.ry + g.r * 0.55)) ** 2 < 1) pts.push({ x, y });
+    const onLabel = Math.abs(x - g.cx) < (g.w > 600 ? 95 : 52) && Math.abs(y - g.cy) < (g.w > 600 ? 30 : 18);
+    if (!onLabel && ((x - g.cx) / (g.rx + g.r * 0.6)) ** 2 + ((y - g.cy) / (g.ry + g.r * 0.55)) ** 2 < 1) pts.push({ x, y });
   }
   // Links: a minimum spanning tree (so the mesh is one piece) plus each node's nearest
   // neighbour, for loops.
@@ -101,10 +102,14 @@ export default function WhiteboardCloud({ size, id }) {
         <g className="hidden-net" aria-hidden="true">
           {m.links.map(([a, b], i) => <line key={i} className="net-link" x1={round(m.pts[a].x)} y1={round(m.pts[a].y)} x2={round(m.pts[b].x)} y2={round(m.pts[b].y)} />)}
           <polyline className="net-route" points={[
-            ...(wide ? [`${g.cx - 120},${g.cy + 120}`] : []),
             ...m.route.map(i => `${round(m.pts[i].x)},${round(m.pts[i].y)}`),
-            ...(wide ? [`${g.cx + 120},${g.cy + 120}`] : []),
           ].join(' ')} />
+          {wide && (
+            <>
+              <polyline className="net-route route-out" points={`${g.cx - 250},${g.h - 64} ${g.cx - 250},${g.cy + 160} ${g.cx - 120},${g.cy + 120} ${round(m.pts[m.route[0]].x)},${round(m.pts[m.route[0]].y)}`} />
+              <polyline className="net-route route-out" points={`${round(m.pts[m.route[m.route.length - 1]].x)},${round(m.pts[m.route[m.route.length - 1]].y)} ${g.cx + 120},${g.cy + 120} ${g.cx + 250},${g.cy + 160} ${g.cx + 250},${g.h - 64}`} />
+            </>
+          )}
           {m.pts.map((p, i) => <rect key={i} className="net-node" x={round(p.x - 3.5)} y={round(p.y - 3.5)} width="7" height="7" rx="1.5" />)}
         </g>
         {all.map((l, i) => <circle key={`g${i}`} className="fog" cx={round(l.x)} cy={round(l.y)} r={l.r - 2.6} />)}

@@ -19,3 +19,54 @@ Consequence: one handwriting font (Caveat, 75 KB) for the board; Georgia for the
 Fence: none broken.
 Mode field: Advanced: a working diagram made of the text's arguments. Acceptable: plain article page, numbered key on phones, links everywhere.
 Measured: first screen union bottom 725 px (1280x800) / 758 px (375x812); overflow 0; contrast failures 0; small targets 0; 12 of 12 paragraphs render identical to cloud.mdx; all 10 quotes found verbatim in their paragraphs (test).
+
+## Panel R1 (the Lite run's round; `design/panel/R1/`, 4 of 4 filed)
+
+| Critic | Anchor used | Observed in the work | Verdict PASS/OBJECT | Requested change |
+|---|---|---|---|---|
+| Critic: Formalist (Arnheim) | Art and Visual Perception | 1280 balanced (5+5, centred cloud, triangular skeleton); at 375 the small pale cloud is outweighed by the key; leaders thin and pale | OBJECT | bigger, bolder phone cloud; heavier leaders |
+| Critic: Evidence (Cairo) | The Truthful Art | article 12/12 exact; 10/10 and 6/6 quotes verbatim; "people who built and named the Net" false for four of six; doodle line unattributed | OBJECT | reword; attribute; disclose the count |
+| Critic: Usability (Krug) | Don't Make Me Think | five-second test and probe pass; answers 1-4 land on one paragraph; duplicate header title | PASS | optional |
+| Critic: Provocateur (Debord) | Society of the Spectacle | the cloud is drawn as a labelled index of what the article says it hides; the claim sits only in the footer doodle | OBJECT | make the cloud conceal something |
+
+### Resolutions, R1
+
+| Finding | Resolution |
+|---|---|
+| Debord: the cloud catalogues instead of hiding | ADAPT (M2): a router mesh under a 90% fog; "Lift the cloud" (checkbox, no JS) reveals it and one red route from your computer to the server |
+| Arnheim + Debord: phone cloud weak, numerals only | ADAPT: bigger, bolder phone cloud, larger numerals, one-line key rows |
+| Arnheim: thin leaders | ADAPT: 3.4 px solid in marker colour |
+| Cairo: "built and named the Net" | ADAPT: "six from the people it quotes, two of whom built the Net"; "our count" linked to About |
+| Cairo: unattributed doodle line | ADAPT: "(the authors)" |
+| Krug: answers 1-4 land on one paragraph | ADAPT: links go to each answer's own highlighted phrase (#q-id) |
+| Krug: header title duplicates the h1 | OVERRULE: the wordmark is the site's identity on every page |
+| Debord: authors' asides weighted equal to testimony | DEFERRED: every label names its source; About states the count is ours |
+
+## Move M2: The cloud hides the network  (BREAK, the Lite run's push)
+Depends on: M1
+Anchors: Breaker `Understanding Comics (Scott McCloud)` (the reader completes what the panel withholds); Debord R1.
+Intent: the article's thesis ("You can use it to obscure what you don't know") enacted: fog over a spanning-tree mesh of routers, one route revealed on demand, extended to the two boxes when lifted; mesh kept off the label.
+Measured: fog opacity 0.9 → 0.12 when lifted (computed style, both widths); route spans entry to exit; first screen 753 / 797 px.
+
+## Panel R2 (re-check: Debord, Arnheim, Krug; `design/panel/R2/`)
+
+| Critic | Anchor used | Observed in the work | Verdict PASS/OBJECT | Requested change |
+|---|---|---|---|---|
+| Critic: Provocateur (Debord) | Society of the Spectacle | "the cloud now enacts the article's point"; route stopped short of the server | PASS | optional: run the route to the server (applied) |
+| Critic: Formalist (Arnheim) | Art and Visual Perception | phone figure now dominant; leaders match the outline; route gives a lead direction | PASS | optional: route to the cables, mesh off the label (applied) |
+| Critic: Usability (Krug) | Don't Make Me Think | lift control obvious; Tab, Space, click and tap all work; per-answer links land on the phrase | PASS | optional |
+
+Applied after R2, measured not re-judged: the route extended to both boxes when lifted; mesh nodes kept off the label.
+
+## Final state (measured 2026-11-12T03:36Z, after the last edit)
+First screen 753 px (1280x800) / 797 px (375x812); overflow 0; contrast failures 0; small targets 0; broken links 0; article 12/12 paragraphs identical to cloud.mdx; tests pass (article unchanged; quotes verbatim).
+
+## Stop test (Lite run)
+One move plus its push, one panel round, a re-check of the objectors. S1 met (no open items; one deferral reasoned). S2: all four seats PASS across R1 (Krug) and R2 (Debord, Arnheim, Krug); Cairo's objection was wording, fixed and measured, not re-judged. S3 is not required for a Lite run. S4: M2 (the fog and route). S5: the Tufte counterpoint applied (exact quotes).
+
+## Compliance (Lite)
+- [x] Mode Adaptive, run type Lite as the owner asked; panel of four (Landing minimum) with the dotted pair Krug -.- Debord
+- [x] Landing graphic summarizes every answer and links each to the text; complete in the first screen at both sizes
+- [x] Palette from the topic (dry-erase markers, sky, storm), zones measured separately
+- [x] Original article preserved verbatim (test + browser check)
+- [ ] Decision Records strictly before moves: M1 written during the build

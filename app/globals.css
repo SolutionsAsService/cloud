@@ -153,6 +153,8 @@ mark.r { background: linear-gradient(transparent 72%, color-mix(in srgb, var(--h
 .lift-input:focus-visible + .board-wrap .lift { outline: 3px solid var(--focus); outline-offset: 2px; }
 .lift-input:checked + .board-wrap .fog { opacity: 0.12; }
 .lift-input:checked + .board-wrap .cloud-word { opacity: 0.25; }
+.route-out { opacity: 0; transition: opacity .6s ease; }
+.lift-input:checked + .board-wrap .route-out { opacity: 1; }
 .lift-input:checked + .board-wrap .lift-on { display: inline; }
 .lift-input:checked + .board-wrap .lift-off { display: none; }
 @media (max-width: 860px) { .lift { position: static; margin: 2px 0 4px; min-height: 36px; font-size: 17px; padding: 0 12px; } }
